@@ -1,8 +1,9 @@
-class PlayableCharacter(private val name: String, hp: Int, damage: Int) {
+class PlayableCharacter(val name: String, hp: Int, damage: Int) {
 
     private var healthPoints = hp
-    private val maxHealthPoints = hp
+    val maxHealthPoints = hp
     private var attackDamage = damage
+
 
     init {
         verifyName(name)
@@ -53,6 +54,15 @@ class PlayableCharacter(private val name: String, hp: Int, damage: Int) {
             println(", le quedan $healthPoints puntos de vida\n")
         }
 
+    }
+
+
+    /** El personaje dice un mensaje que se muestra por pantalla
+     *
+     * @param message texto a mostrar
+     */
+    fun talk(message: String) {
+        println("$name dice: $message")
     }
 
 

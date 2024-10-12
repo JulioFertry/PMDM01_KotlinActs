@@ -1,13 +1,34 @@
+/** Muestra a un personaje diciendo un mensaje
+ *
+ * @param player personaje que dice el mensaje
+ */
+fun ej01(player: PlayableCharacter) {
+    player.talk("¡Hola, Mundo!")
+}
+
+
+/** Crea a eustaquio y muestra su vida
+ */
+fun ej02() {
+    val name = "Eustaquio"
+    val health = 100
+    val damage = 50
+
+    val eustaquio = PlayableCharacter(name, health, damage)
+    println("La vida de ${eustaquio.name} es de ${eustaquio.maxHealthPoints}")
+}
+
+
 /** Enfrenta a 2 personajes hasta que uno muere
  *
- * @param j1 jugador 1
- * @param j2 jugador 2
+ * @param p1 jugador 1
+ * @param p2 jugador 2
  */
-fun ej07(j1: PlayableCharacter, j2: PlayableCharacter) {
+fun ej07(p1: PlayableCharacter, p2: PlayableCharacter) {
 
-    while (j1.isAlive() && j2.isAlive()) {
-        j1.attack(j2)
-        j2.attack(j1)
+    while (p1.isAlive() && p2.isAlive()) {
+        p1.attack(p2)
+        p2.attack(p1)
     }
 
 }
@@ -30,6 +51,11 @@ fun main() {
         val pepe = PlayableCharacter("Pepe", 180, 20)
         val juan = PlayableCharacter("Juan", 140, 30)
 
+        ej01(pepe)
+        utilities.stop(2)
+
+        ej02()
+        utilities.stop(2)
 
         ej07(pepe, juan)
         utilities.stop(2)
