@@ -145,6 +145,55 @@ fun ej09(p1: PlayableCharacter, p2: PlayableCharacter) {
 }
 
 
+/** Enfrenta a un grupo de personajes contra un personaje jefe hasta que muere el grupo o el jefe
+ *
+ * @param team grupo de personajes
+ * @param boss personaje jefe
+ */
+fun ej10(team: List<PlayableCharacter>, boss: PlayableCharacter) {
+    val aliveTeammates: MutableList<PlayableCharacter> = team.toMutableList()
+
+    while (!isEverybodyDead(team) && boss.isAlive()) {
+
+        team.forEach {
+            it.attack(boss)
+        }
+
+        val teammate = team.random()
+        boss.attack(teammate)
+
+        if (!teammate.isAlive()) {
+            aliveTeammates.remove(teammate)
+        }
+    }
+}
+
+
+/** Comprueba en una lista de personajes si todos han muerto
+ *
+ * @param characters lista de personajes
+ *
+ * @return true si han muerto todos, false si queda alguno vivo
+ */
+fun isEverybodyDead(characters: List<PlayableCharacter>): Boolean {
+    var everybodyDied = false
+    val totalCharacters = characters.size
+    var deadCount = 0
+
+    for (i in 0 until totalCharacters) {
+        if (!characters[i].isAlive()) {
+            deadCount += 1
+        }
+    }
+
+    if (deadCount >= totalCharacters) {
+        everybodyDied = true
+    }
+
+    return everybodyDied
+}
+
+
 /** Cura completamente a todos los personajes que reciba
  *
  * @param characters personajes que se van a curar
@@ -164,9 +213,9 @@ fun main() {
         val godofredo = PlayableCharacter("Godofredo", 70, 9)
         val ramona = PlayableCharacter("Ramona", 110, 7)
         val practiceDummy = PlayableCharacter("Muñeco de practica", 999999999, 1)
-        val jefazo = PlayableCharacter("Jefazo", 500, 18)
+        val jefazo = PlayableCharacter("Jefazo", 500, 35)
 
-        val characters = listOf(pepe, juan, practiceDummy, godofredo, ramona, jefazo)
+        val characters = listOf(pepe, juan, godofredo, ramona)
 
         ej01(pepe)
         utilities.stop(1)
@@ -192,7 +241,7 @@ fun main() {
         utilities.stop(3)
 
         val winner = ej07(pepe, juan)
-        println("El ganador es $winner")
+        println("El ganador es ${winner.name}")
         healEverybody(characters)
         utilities.stop(3)
 
@@ -208,13 +257,14 @@ fun main() {
         ej09(juan, godofredo)
         healEverybody(characters)
         juan.talk("soy nivel: ${juan.level}")
+        utilities.stop(1)
 
+        ej10(characters, jefazo)
 
     } catch (e: IllegalArgumentException) {
         println("*** ERROR *** - $e")
     } catch (e: Exception) {
         println("*** ERROR *** - Ha ocurrido un error inesperado: ($e)")
     }
-
 
 }
