@@ -2,7 +2,10 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
 
     private var healthPoints = hp
     val maxHealthPoints = hp
+    private var criticDamage = false
     var level = 1
+    private val inventory = mutableListOf<Item>()
+    var experience = 0
 
     private var attackDamage = damage
         set(value) {
@@ -42,6 +45,47 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
     }
 
 
+    /** Activa la posibilidad de que el personaje aseste golpes críticos */
+    fun enableCriticAttacks() {
+        criticDamage = true
+    }
+
+
+    /** Desactiva la posibilidad de que el personaje aseste golpes críticos */
+    fun disableCriticAttacks() {
+        criticDamage = false
+    }
+
+
+    /** Comprueba si el ataque es critico
+     *
+     * @param damage daño del ataque
+     *
+     * @return true si es critico, false si no lo es
+     */
+    private fun isCritic(damage: Int): Boolean {
+        return (damage > 50 && criticDamage)
+    }
+
+
+    /** Aplica daño critico si el ataque es critico
+     *
+     * @param damage daño sin critico aplicado
+     *
+     * @return daño sin critico o con critico aplicado
+     */
+    private fun applyCritic(damage: Int): Int {
+        var finalDamage = damage
+
+        if (isCritic(damage)) {
+            print("¡Golpe crítico!")
+            finalDamage = damage * 2
+        }
+
+        return finalDamage
+    }
+
+
     /** Ataca a otro personaje aplicando daño aleatorio seguún su attackDamage
      *
      * @param enemy personaje al que se ataca
@@ -51,6 +95,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
 
         if (isAlive()) {
             damage = attackMultiplier()
+            damage = applyCritic(damage)
             enemy.receiveDamage(damage)
         }
 
@@ -58,10 +103,25 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
     }
 
 
-    /** Cura completamente al personaje
-     */
-    fun heal() {
+    /** Cura completamente al personaje */
+    fun fullHeal() {
+        talk("me he curado!")
         healthPoints = maxHealthPoints
+    }
+
+
+    /** Cura al personaje una cantidad señalada de vida
+     *
+     * @param healPoints cantidad de vida que se cura
+     */
+    fun heal(healPoints: Int) {
+
+        if ((healthPoints + healPoints) > maxHealthPoints) {
+            healthPoints = maxHealthPoints
+        } else {
+            healthPoints += healPoints
+        }
+
     }
 
 
@@ -69,7 +129,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
      *
      * @param damage daño que recibe el personaje
      */
-    private fun receiveDamage(damage: Int) {
+    fun receiveDamage(damage: Int) {
         healthPoints -= damage
         print("$name ha recibido $damage puntos de daño")
 
@@ -97,6 +157,33 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
      */
     fun levelUp(levels: Int) {
         level += levels
+    }
+
+
+    /** Añade un objeto al inventario
+     *
+     * @param item objeto que se añade
+     */
+    fun addToInventory(item: Item) {
+        inventory.add(item)
+    }
+
+
+    /** Elimina un objeto del inventario según su id
+     *
+     * @param id id del objeto que se elimina del inventario
+     */
+    fun deleteItemById(id: Int) {
+        inventory.removeIf { it.id == id }
+    }
+
+
+    /** Muestra el inventario completo del personaje */
+    fun showInventory() {
+        println("Inventario de $name:")
+        inventory.forEach {
+            println("   id: ${it.id}, ${it.name}")
+        }
     }
 
 
