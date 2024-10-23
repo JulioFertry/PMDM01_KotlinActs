@@ -139,6 +139,7 @@ object Actividades {
      * @param p2 jugador 2
      */
     fun ej09(p1: PlayableCharacter, p2: PlayableCharacter) {
+        val fighters = listOf(p1, p2)
 
         val winner = ej07(p1, p2)
         winner.experience += 50
@@ -147,6 +148,7 @@ object Actividades {
             winner.levelUp(1)
         }
 
+        utilities.healEverybody(fighters)
     }
 
 
@@ -164,7 +166,7 @@ object Actividades {
                 it.attack(boss)
             }
 
-            val teammate = team.random()
+            val teammate = aliveTeammates.random()
             boss.attack(teammate)
 
             if (!teammate.isAlive()) {

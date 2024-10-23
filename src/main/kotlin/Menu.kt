@@ -5,8 +5,10 @@ class Menu {
 
 
     fun askForOption(): String {
-        print("Introduce la actividad (1-10) o 0 para salir: ")
-        return readln()
+        print("\nIntroduce la actividad (1-10) o 0 para salir: ")
+        val option = readln()
+        print("\n")
+        return option
     }
 
     fun performOption(option: String) {
@@ -21,11 +23,11 @@ class Menu {
             "7" -> println("El ganador es: ${Actividades.ej07(characters.pepe, characters.juan).name}")
             "8" -> Actividades.ej08(characters.godofredo)
             "9" -> for (i in 1..4) { Actividades.ej09(characters.juan, characters.ramona) }
-            "10" -> Actividades.ej10(characters.characters, characters.jefazo)
+            "10" -> Actividades.ej10(characters.team, characters.jefazo)
             else -> println("La opción introducida no existe...")
         }
 
-        utilities.healEverybody(characters.characters)
+        utilities.healEverybody(characters.everybody)
     }
 
 }

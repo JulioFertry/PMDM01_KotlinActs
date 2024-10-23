@@ -6,6 +6,7 @@ class Characters {
     val ramona = PlayableCharacter("Ramona", 110, 7)
     val practiceDummy = PlayableCharacter("Muñeco de practica", 999999999, 1)
     val jefazo = PlayableCharacter("Jefazo", 500, 35)
-    val characters = listOf(pepe, juan, godofredo, ramona, practiceDummy, jefazo)
+    val team = listOf(pepe, juan, godofredo, ramona)
+    val everybody = listOf(pepe, juan, godofredo, ramona, practiceDummy, jefazo)
 
 }

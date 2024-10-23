@@ -93,7 +93,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
     fun attack(enemy: PlayableCharacter): Int {
         var damage = 0
 
-        if (isAlive()) {
+        if (this.isAlive() && enemy.isAlive()) {
             damage = attackMultiplier()
             damage = applyCritic(damage)
             enemy.receiveDamage(damage)
@@ -133,7 +133,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
         print("$name ha recibido $damage puntos de daño")
 
         if (healthPoints <= 0) {
-            println(", ha muerto!")
+            println(", ha muerto!\n")
         } else {
             println(", le quedan $healthPoints puntos de vida\n")
         }
@@ -157,6 +157,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
     fun levelUp(levels: Int) {
         level += levels
         this.talk("He subido al nivel $level")
+        this.experience = 0
     }
 
 
