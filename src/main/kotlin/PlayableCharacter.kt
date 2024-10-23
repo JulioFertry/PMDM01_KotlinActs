@@ -105,7 +105,6 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
 
     /** Cura completamente al personaje */
     fun fullHeal() {
-        talk("me he curado!")
         healthPoints = maxHealthPoints
     }
 

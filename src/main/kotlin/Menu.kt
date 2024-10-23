@@ -1,6 +1,7 @@
 class Menu {
 
     private val characters = Characters()
+    private val utilities = Utilities()
 
 
     fun askForOption(): String {
@@ -23,6 +24,8 @@ class Menu {
             "10" -> Actividades.ej10(characters.characters, characters.jefazo)
             else -> println("La opción introducida no existe...")
         }
+
+        utilities.healEverybody(characters.characters)
     }
 
 }
