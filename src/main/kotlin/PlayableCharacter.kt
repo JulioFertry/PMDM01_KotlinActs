@@ -157,6 +157,7 @@ class PlayableCharacter(val name: String, hp: Int, damage: Int) {
      */
     fun levelUp(levels: Int) {
         level += levels
+        this.talk("He subido al nivel $level")
     }
 
 
